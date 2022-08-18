@@ -1,0 +1,109 @@
+<mat-drawer-container autosize>
+    <mat-drawer #drawer mode="over">
+        <mat-nav-list>
+            <a mat-list-item routerLink="/home">
+                <mat-icon color="primary">home</mat-icon>
+                Página principal
+            </a>
+            <a mat-list-item routerLink="/clientes">
+                <mat-icon color="primary">person</mat-icon>
+                Clientes
+            </a>
+            <a mat-list-item routerLink="/tecnicos">
+                <mat-icon color="primary">support_agent</mat-icon>
+                Técnicos
+            </a>
+            <a mat-list-item routerLink="/chamados">
+                <mat-icon color="primary">perm_phone_msg</mat-icon>
+                Chamados
+            </a>
+            <a mat-list-item routerLink="/faq">
+                <mat-icon color="primary">quiz</mat-icon>
+                FAQ
+            </a>
+            <a mat-list-item routerLink="/logout">
+                <mat-icon color="primary">logout</mat-icon>
+                Sair
+            </a>
+        </mat-nav-list>
+    </mat-drawer>
+
+    <mat-drawer-content>
+
+        <mat-toolbar color="primary">
+            <button mat-icon-button (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>
+                <h1>HelpR</h1>
+            </span>
+            <a href="">
+                <img src="assets\icons\icon-72x72.png" alt="logo">
+            </a>
+        </mat-toolbar>
+
+        <div class="container">
+            <div class="mat-elevation-z8">
+
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Id Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> Id </th>
+                        <td mat-cell *matCellDef="let tecnico"> {{tecnico.id}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nome">
+                        <th mat-header-cell *matHeaderCellDef> Nome </th>
+                        <td mat-cell *matCellDef="let tecnico"> {{tecnico.nome}} </td>
+                    </ng-container>
+
+                    <!-- Cpf Column -->
+                    <ng-container matColumnDef="cpf">
+                        <th mat-header-cell *matHeaderCellDef> CPF </th>
+                        <td mat-cell *matCellDef="let tecnico"> {{tecnico.cpf}} </td>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> E-mail </th>
+                        <td mat-cell *matCellDef="let tecnico"> {{tecnico.email}} </td>
+                    </ng-container>
+                    <!-- Data Column -->
+                    <ng-container matColumnDef="dataCriacao">
+                        <th mat-header-cell *matHeaderCellDef> Data de criação </th>
+                        <td mat-cell *matCellDef="let tecnico"> {{tecnico.dataCriacao}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="update">
+                        <th mat-header-cell *matHeaderCellDef> Alterar </th>
+                        <td mat-cell *matCellDef="let tecnico"> 
+                            <button mat-icon-button>
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="delete">
+                        <th mat-header-cell *matHeaderCellDef> Apagar </th>
+                        <td mat-cell *matCellDef="let tecnico"> 
+                            <button mat-icon-button>
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic tecnicos">
+                </mat-paginator>
+            </div>
+
+        </div>
+
+    </mat-drawer-content>
+</mat-drawer-container>
