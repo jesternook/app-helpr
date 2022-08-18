@@ -1,6 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-<<<<<<< Updated upstream
-=======
+@import '~ngx-toastr/toastr';
+
 * {
     box-sizing: border-box;
 }
@@ -15,7 +14,7 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-mat-drawer-container{
+mat-drawer-container {
     width: 100%;
     height: 100%;
 }
@@ -24,19 +23,19 @@ mat-drawer {
     padding: 20px;
 }
 
-mat-toolbar{
+mat-toolbar {
     height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-mat-toolbar img{
-width: 50px;
-height: 50px;
+mat-toolbar img {
+    width: 50px;
+    height: 50px;
 }
 
-mat-nav-list a mat-icon{
+mat-nav-list a mat-icon {
     margin-right: 10px;
 }
 
@@ -46,7 +45,16 @@ mat-nav-list a mat-icon{
     padding: 0 30px;
 }
 
-.full-width{
+.full-width {
     width: 100%;
 }
->>>>>>> Stashed changes
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

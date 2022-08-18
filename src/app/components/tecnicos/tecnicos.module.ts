@@ -1,22 +1,22 @@
-import { HomeRoutingModule } from './home-routing.module';
 import { MaterialModule } from './../../shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home.component';
 
+import { TecnicosRoutingModule } from './tecnicos-routing.module';
+import { TecnicosComponent } from './tecnicos.component';
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    TecnicosComponent
   ],
   imports: [
     CommonModule,
-    MaterialModule,
-    HomeRoutingModule
+    TecnicosRoutingModule,
+    MaterialModule
   ],
   exports: [
-    HomeComponent
+    TecnicosComponent
   ]
 })
-export class HomeModule { }
+export class TecnicosModule { }
