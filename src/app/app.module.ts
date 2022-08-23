@@ -1,3 +1,4 @@
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { UtilsModule } from './utils/utils.module';
 import { PagesModule } from './shared/pages/pages.module';
 import { NgModule } from '@angular/core';
@@ -6,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
@@ -27,7 +28,13 @@ import { JwtModule } from '@auth0/angular-jwt';
     JwtModule,
     UtilsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
