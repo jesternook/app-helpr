@@ -1,23 +1,23 @@
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { TecnicoService } from './../../services/tecnico.service';
+import { ClienteService } from './../../services/cliente.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Tecnico } from 'src/app/models/tecnico';
+import { Cliente } from 'src/app/models/cliente';
 
 @Component({
-  selector: 'app-tecnicos',
-  templateUrl: './tecnicos.component.html',
-  styleUrls: ['./tecnicos.component.scss']
+  selector: 'app-clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.scss']
 })
-export class TecnicosComponent implements OnInit, AfterViewInit {
+export class ClientesComponent implements OnInit, AfterViewInit {
 
-  tecnicoList: Tecnico[] = [];
+  clienteList: Cliente[] = [];
 
   displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'dataCriacao', 'update',
     'delete'];
-  dataSource = new MatTableDataSource<Tecnico>(this.tecnicoList);
+  dataSource = new MatTableDataSource<Cliente>(this.clienteList);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -25,10 +25,10 @@ export class TecnicosComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  private service: TecnicoService;
+  private service: ClienteService;
   private toast: ToastrService;
 
-  constructor(service: TecnicoService, toast: ToastrService) {
+  constructor(service: ClienteService, toast: ToastrService) {
     this.service = service;
     this.toast = toast;
   }
@@ -43,9 +43,9 @@ export class TecnicosComponent implements OnInit, AfterViewInit {
   }
 
   initializeTable(): void {
-    this.service.findAll().subscribe(tecnicos => {
-      this.tecnicoList = tecnicos;
-      this.dataSource = new MatTableDataSource<Tecnico>(this.tecnicoList);
+    this.service.findAll().subscribe(clientes => {
+      this.clienteList = clientes;
+      this.dataSource = new MatTableDataSource<Cliente>(this.clienteList);
       this.dataSource.paginator = this.paginator;
     })
   }
@@ -53,7 +53,7 @@ export class TecnicosComponent implements OnInit, AfterViewInit {
   delete(id: number): void {
     this.service.remove(id).subscribe({
       next: response => {
-        this.toast.success("Técnico deletado com sucesso!", "Sucesso");
+        this.toast.success("Cliente deletado com sucesso!", "Sucesso");
         this.initializeTable();
       }
     });

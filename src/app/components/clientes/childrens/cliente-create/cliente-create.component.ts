@@ -1,21 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { API_CONFIG } from './../../../../config/api.config';
+import { API_CONFIG } from '../../../../config/api.config';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { TecnicoService } from './../../../../services/tecnico.service';
+import { ClienteService } from '../../../../services/cliente.service';
 import { ToastrService } from 'ngx-toastr';
-import { Tecnico } from './../../../../models/tecnico';
+import { Cliente } from '../../../../models/cliente';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-tecnico-create',
-  templateUrl: './tecnico-create.component.html',
-  styleUrls: ['./tecnico-create.component.scss']
+  selector: 'app-cliente-create',
+  templateUrl: './cliente-create.component.html',
+  styleUrls: ['./cliente-create.component.scss']
 })
-export class TecnicoCreateComponent implements OnInit {
+export class ClienteCreateComponent implements OnInit {
 
-  public tecnico: Tecnico = {
+  public cliente: Cliente = {
     nome: "",
     cpf: "",
     email: "",
@@ -25,11 +25,11 @@ export class TecnicoCreateComponent implements OnInit {
 
   private perfis: number[] = [];
   private toast: ToastrService;
-  private service: TecnicoService;
+  private service: ClienteService;
   private router: Router;
   private http: HttpClient;
 
-  constructor(service: TecnicoService, toast: ToastrService, router: Router, http: HttpClient) {
+  constructor(service: ClienteService, toast: ToastrService, router: Router, http: HttpClient) {
     this.toast = toast;
     this.service = service;
     this.router = router;
@@ -43,20 +43,20 @@ export class TecnicoCreateComponent implements OnInit {
     for (let i = 0; i < this.perfis.length; i++) {
       if (this.perfis[i] === perfil) {
         this.perfis.splice(i, 1);
-        this.tecnico.perfis = this.perfis;
+        this.cliente.perfis = this.perfis;
         return;
       }
     }
     this.perfis.push(perfil);
-    this.tecnico.perfis = this.perfis;
+    this.cliente.perfis = this.perfis;
   }
 
   create(form: NgForm) {
     if (form.valid) {
-      this.service.insert(this.tecnico).subscribe({
+      this.service.insert(this.cliente).subscribe({
         next: response => {
-          this.toast.success("Técnico cadastrado com sucesso!", "Sucesso");
-          this.router.navigate(["/tecnicos"]);
+          this.toast.success("Cliente cadastrado com sucesso!", "Sucesso");
+          this.router.navigate(["/clientes"]);
         },
         error: errorResponse => {
           let errors = errorResponse.error.errors;

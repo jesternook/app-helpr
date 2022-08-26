@@ -1,19 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { API_CONFIG } from './../../../../config/api.config';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { TecnicoService } from './../../../../services/tecnico.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TecnicoService } from '../../../../services/tecnico.service';
 import { ToastrService } from 'ngx-toastr';
-import { Tecnico } from './../../../../models/tecnico';
+import { Tecnico } from '../../../../models/tecnico';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-tecnico-create',
-  templateUrl: './tecnico-create.component.html',
-  styleUrls: ['./tecnico-create.component.scss']
+  selector: 'app-tecnico-update',
+  templateUrl: './tecnico-update.component.html',
+  styleUrls: ['./tecnico-update.component.scss']
 })
-export class TecnicoCreateComponent implements OnInit {
+export class TecnicoUpdateComponent implements OnInit {
 
   public tecnico: Tecnico = {
     nome: "",
@@ -24,36 +22,63 @@ export class TecnicoCreateComponent implements OnInit {
   }
 
   private perfis: number[] = [];
+  public perfisChecked: boolean[] = [false, false, false];
+
   private toast: ToastrService;
   private service: TecnicoService;
   private router: Router;
-  private http: HttpClient;
+  private route: ActivatedRoute;
 
-  constructor(service: TecnicoService, toast: ToastrService, router: Router, http: HttpClient) {
+  constructor(service: TecnicoService, toast: ToastrService, router: Router, route: ActivatedRoute) {
     this.toast = toast;
     this.service = service;
     this.router = router;
-    this.http =http;
+    this.route = route;
   }
 
   ngOnInit(): void {
+    let id: string | null = this.route.snapshot.paramMap.get("id");
+    if (id != null) {
+      this.service.findById(Number.parseInt(id)).subscribe(tecnico => {
+        this.tecnico = tecnico;
+        this.initializePerfis(<string[]>this.tecnico.perfis);
+      });
+    }
+  }
+
+  initializePerfis(perfis: string[]): void {
+    for (let perfil of perfis) {
+      switch (perfil) {
+        case "ADMIN":
+          this.addPerfil(0);
+          break;
+        case "TECNICO":
+          this.addPerfil(1);
+          break;
+        case "CLIENTE":
+          this.addPerfil(2);
+          break;
+      }
+    }
   }
 
   addPerfil(perfil: number): void {
     for (let i = 0; i < this.perfis.length; i++) {
       if (this.perfis[i] === perfil) {
         this.perfis.splice(i, 1);
+        this.perfisChecked[perfil] = false;
         this.tecnico.perfis = this.perfis;
         return;
       }
     }
     this.perfis.push(perfil);
+    this.perfisChecked[perfil] = false;
     this.tecnico.perfis = this.perfis;
   }
 
-  create(form: NgForm) {
+  update(form: NgForm) {
     if (form.valid) {
-      this.service.insert(this.tecnico).subscribe({
+      this.service.update(this.tecnico).subscribe({
         next: response => {
           this.toast.success("Técnico cadastrado com sucesso!", "Sucesso");
           this.router.navigate(["/tecnicos"]);
@@ -74,4 +99,5 @@ export class TecnicoCreateComponent implements OnInit {
       this.toast.error("Dados inválidos", "Erro");
     }
   }
+
 }

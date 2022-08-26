@@ -1,3 +1,4 @@
+import { TecnicoUpdateComponent } from './childrens/tecnico-update/tecnico-update.component';
 import { TecnicoCreateComponent } from './childrens/tecnico-create/tecnico-create.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: "new",
     component: TecnicoCreateComponent
+  },
+  {
+    path: "edit/:id",
+    component: TecnicoUpdateComponent
   }
 ];
 
