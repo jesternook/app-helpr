@@ -1,0 +1,13 @@
+.list-details{
+    font-size: 16px;
+
+    dt{
+        color: #5c5c5c;
+        font-weight: bold;
+        border-top: 1px solid #5b5b5b78;
+        margin-top: 10px;
+    }
+    dt:first-of-type{
+        border: none;
+    }
+}
